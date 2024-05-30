@@ -1,3 +1,15 @@
+"""
+convert a cli skeleton dict into a cmd.Cmd class
+
+a cli skeleton dict is a python dictionary that describes the
+structure of a command line application. This module contains
+utilities that facilitate to define and parse such dictionaries
+and obtain cli command loops.
+
+see example in the end of the module.
+"""
+
+
 __all__ = [
     'SkelCmdBase',
     'skel_to_cmd_cls',
@@ -18,6 +30,11 @@ from cli_skel.utils.result import Ok, Err, Result, get_result
 
 
 class SkelCmdBase(cmd.Cmd):
+    """
+    Base class used by cli skeleton based command loops.
+    Generates a class which implements a REPL whose behavior is determined by the cli skeleton.
+    """
+
     EXIT_SUCCESS: ClassVar[int] = 0
     EXIT_FAILURE: ClassVar[int] = 1
 
@@ -341,6 +358,11 @@ def skel_to_cmd_cls(skel: dict[str, str | dict],
                     auto_required: bool = True,
                     **argparse_kwargs,
                     ) -> type[cmd.Cmd]:
+    """
+    function that takes a cli skeleton and returns a class which is an
+    instance of cmd.Cmd and implements behavior based on that cli skeleton.
+    """
+
     skel_ = skel
 
     intro_ = intro
@@ -533,4 +555,3 @@ if __name__ == '__main__':
 #         if not strict:
 #             return Err(e, stdout=stdout, stderr=stderr)
 #         raise
-
