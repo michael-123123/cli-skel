@@ -8,6 +8,7 @@ __all__ = [
 
 
 import io
+import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property
@@ -123,12 +124,23 @@ class Err[_T](ResultBase[_T]):
 type Result[_T] = Ok[_T] | Err
 
 
+class EmptyMapping[_K, _V](typing.Mapping[_K, _V]):
+    def __len__(self) -> int:
+        return 0
+
+    def __iter__(self) -> typing.Iterator[_K]:
+        yield from ()
+
+    def __getitem__(self, item: _K) -> _V:
+        raise KeyError()
+
+
 _P = ParamSpec('_P')
 
 
 def get_result[_T](func: Callable[_P, _T],
-                   args: _P.args,
-                   kwargs: _P.kwargs,
+                   args: _P.args = (),
+                   kwargs: _P.kwargs = EmptyMapping(),
                    *,
                    silent: bool = False,
                    stdout: Optional[IO] = None,
@@ -141,7 +153,7 @@ def get_result[_T](func: Callable[_P, _T],
     if isinstance(ctx, Err):
         return ctx
 
-    metadata = dict(metadata if metadata else {})
+    metadata = dict(metadata) if metadata else {}
     with ctx:
         try:
             value = func(*args, **kwargs)
