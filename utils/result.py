@@ -9,7 +9,7 @@ __all__ = [
 
 import io
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import cached_property
 from typing import Any, Optional, IO, NoReturn, Callable, ParamSpec
 
@@ -36,6 +36,10 @@ class ResultBase[_T](ABC):
     def getvalue(self, strict: bool = True) -> _T:
         pass
 
+    @abstractmethod
+    def setvalue(self, newval: _T, store: Optional[str] = None, strict: bool = True) -> None:
+        pass
+
 
 @dataclass
 class Ok[_T](ResultBase[_T]):
@@ -49,13 +53,18 @@ class Ok[_T](ResultBase[_T]):
     """
 
     value: _T
-    metadata: dict = None
+    metadata: dict = field(default_factory=dict)
 
     def is_ok(self) -> bool:
         return True
 
     def getvalue(self, strict: bool = True):
         return self.value
+
+    def setvalue(self, newval: _T, store: Optional[str] = None, strict: bool = True) -> None:
+        if store is not None:
+            self.metadata[store] = self.value
+        self.value = newval
 
     def __getattr__(self, key: str) -> Any:
         try:
@@ -79,7 +88,7 @@ class Err[_T](ResultBase[_T]):
     stdout: Optional[IOType] = None
     stderr: Optional[IOType] = None
     default: Optional[Any] = None
-    metadata: dict = None
+    metadata: dict = field(default_factory=dict)
 
     def is_ok(self) -> bool:
         return False
@@ -94,6 +103,14 @@ class Err[_T](ResultBase[_T]):
     def getvalue(self, strict: bool = True) -> _T | NoReturn:
         if not strict:
             return self.default
+        raise self.asexception
+
+    def setvalue(self, newval: _T, store: Optional[str] = None, strict: bool = True) -> None:
+        if not strict:
+            if store:
+                self.metadata[store] = self.default
+            self.default = newval
+            return
         raise self.asexception
 
     def __getattr__(self, key: str) -> Any:
