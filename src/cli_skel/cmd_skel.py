@@ -13,7 +13,7 @@ import shlex
 import sys
 from typing import ClassVar, Optional, NoReturn, IO, Any, Mapping
 
-from cli_skel.utils.argparse_skel import skel_to_argparse, print_skel, SkelSpecialKeys
+from cli_skel.argparse_skel import skel_to_argparse, print_skel, SkelSpecialKeys
 from cli_skel.utils.result import Ok, Err, Result, get_result
 
 
