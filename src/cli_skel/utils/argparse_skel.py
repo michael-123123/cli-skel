@@ -26,8 +26,8 @@ import argparse
 from copy import deepcopy
 from typing import Optional, IO, Any, Generator, Iterable
 
-from utils.result import Result, get_result
-from utils.sentinels import MissingType
+from cli_skel.utils.result import Result, get_result
+from cli_skel.utils.sentinels import MissingType
 
 
 _MISSING = MissingType(__name__)

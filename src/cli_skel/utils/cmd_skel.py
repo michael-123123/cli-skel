@@ -13,8 +13,8 @@ import shlex
 import sys
 from typing import ClassVar, Optional, NoReturn, IO, Any, Mapping
 
-from utils.argparse_skel import skel_to_argparse, print_skel, SkelSpecialKeys
-from utils.result import Ok, Err, Result, get_result
+from cli_skel.utils.argparse_skel import skel_to_argparse, print_skel, SkelSpecialKeys
+from cli_skel.utils.result import Ok, Err, Result, get_result
 
 
 class SkelCmdBase(cmd.Cmd):

@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from functools import cached_property
 from typing import Any, Optional, IO, NoReturn, Callable, ParamSpec
 
-from utils.context_utils import redirect_outputs
+from cli_skel.utils.context_utils import redirect_outputs
 
 type IOType = IO | io.IOBase | io.StringIO
 
