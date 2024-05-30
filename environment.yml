@@ -1,6 +1,5 @@
-name: nas
+name: cli-skel
 channels:
   - conda-forge
 dependencies:
   - conda-forge::python >= 3.12
-  - conda-forge::python-dotenv
