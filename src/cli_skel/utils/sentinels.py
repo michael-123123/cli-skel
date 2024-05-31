@@ -34,4 +34,3 @@ class MissingType:
     def __str__(self) -> str:
         name = f'[{self.name}]' if self.name is not None else ''
         return f'Missing{name}'
-

@@ -29,4 +29,3 @@ class TestSentinels(unittest.TestCase):
         self.assertTrue(missing1 != copy(missing2))
         self.assertTrue(missing1 is not deepcopy(missing2))
         self.assertTrue(missing1 != deepcopy(missing2))
-
