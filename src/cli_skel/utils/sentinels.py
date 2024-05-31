@@ -35,31 +35,3 @@ class MissingType:
         name = f'[{self.name}]' if self.name is not None else ''
         return f'Missing{name}'
 
-
-def _main():
-    # TODO: move to tests/
-
-    import copy
-
-    missing1 = MissingType()
-    missing2 = MissingType('hello')
-
-    # should be True
-    print(missing1)
-    print(missing1 == MissingType())
-    print(missing1 is MissingType())
-    print(missing1 is copy.copy(MissingType()))
-    print(missing1 is copy.deepcopy(MissingType()))
-    print()
-
-    # should be False
-    print(missing2)
-    print(missing1 == missing2)
-    print(missing1 is missing2)
-    print(missing1 is copy.copy(missing2))
-    print(missing1 is copy.deepcopy(missing2))
-    print()
-
-
-if __name__ == '__main__':
-    _main()
