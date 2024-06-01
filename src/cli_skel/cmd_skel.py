@@ -395,49 +395,43 @@ def skel_to_cmd_cls(skel: dict[str, str | dict],
     return SkelCmd
 
 
-def _main():
-    skel = {
-        'x': {(): {'type': int}, 'help': 'asdasda'},
-        'y': {},
-        '--z': {},
-        '--h': {},
-        '_': {
-            (): {
-                'required': True,
-                # 'dest': 'cmd',
-            },
-            'a': {'->': lambda *_, **__: print('a is running...')},
-            'b': {'->': lambda *_, **__: print('b is running...')},
-            'c': {'->': lambda *_, **__: print('c is running...')},
-            'd': {
-                '--w': {},
-                'asd': {},
-                '_': {
-                    'cmd1': {'->': lambda *_, **__: print('d/cmd1 is running...')},
-                    'cmd2': {'->': lambda *_, **__: print('d/cmd2 is running...')},
-                    'cmd3': {'->': lambda *_, **__: print('d/cmd3 is running...'),
-                             '--a': {'type': int},
-                             },
-                }
-            },
-        }
-    }
-    cls = skel_to_cmd_cls(
-        skel,
-        intro='hello - welcome...',
-        outro='sad to see you go',
-        prompt='>>> ',
-        internal_cmd_prefix='/',
+def skel_to_cmd(skel: dict[str, str | dict],
+                *,
+                intro: Optional[str] = None,
+                outro: Optional[str] = None,
+                prompt: Optional[str] = None,
+                ignore_empty: bool = True,
+                exit_on_eof: bool = True,
+                internal_cmd_prefix: str = '<>',
+                skel_params: Any = SkelSpecialKeys,
+                parser: Optional[argparse.ArgumentParser] = None,
+                auto_dest: Optional[str] = 'toplevel',
+                auto_required: bool = True,
+                **argparse_kwargs,
+                ) -> cmd.Cmd:
+    cmd_cls = skel_to_cmd_cls(
+        skel=skel,
+        intro=intro,
+        outro=outro,
+        prompt=prompt,
+        ignore_empty=ignore_empty,
+        exit_on_eof=exit_on_eof,
+        internal_cmd_prefix=internal_cmd_prefix,
+        skel_params=skel_params,
+        parser=parser,
+        auto_dest=auto_dest,
+        auto_required=auto_required,
+        **argparse_kwargs,
     )
-    cls().cmdloop()
+    return cmd_cls()
 
 
-if __name__ == '__main__':
-    _main()
+# TODO: add support for ?? which will do internal command support and help
+#       for example ?? will print the current config etc and show internal command structure
+#       and `?? cmd` will provide help for it.
 
 
 """
-
     def find_abbrev(self, line: str) -> str:
         line = line.strip()
         if not line:
