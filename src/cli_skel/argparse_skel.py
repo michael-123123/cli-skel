@@ -267,57 +267,6 @@ def format_skel_(dct: dict, space: str, space_incr: str) -> str:
     return '\n'.join(fmt)
 
 
-def _main(argv=None):
-    """
-        prog <x> <y> [--z | --no-z] [--h=hello] {cmd: a b c {d: [--w=world] d1 d2 d3 [--a=abc]}}
-            prox x y [optionals] a
-            prox x y [optionals] b
-            prox x y [optionals] c
-            prox x y [optionals] d [optionals_d] d1
-            prox x y [optionals] d [optionals_d] d2
-            prox x y [optionals] d [optionals_d] d3 [optionals_d3]
-    """
-
-    skel = {
-        'x': {(): {'type': int}, 'help': 'asdasda'},
-        'y': {},
-        '--z': {},
-        '--h': {},
-        '_': {
-            (): {
-                'required': True,
-                # 'dest': 'cmd',
-            },
-            'a': {'->': lambda *_, **__: print('a is running...')},
-            'b': {'->': lambda *_, **__: print('b is running...')},
-            'c': {'->': lambda *_, **__: print('c is running...')},
-            'd': {
-                '--w': {},
-                'asd': {},
-                '_': {
-                    'cmd1': {'->': lambda *_, **__: print('d/cmd1 is running...')},
-                    'cmd2': {'->': lambda *_, **__: print('d/cmd2 is running...')},
-                    'cmd3': {'->': lambda *_, **__: print('d/cmd3 is running...'),
-                             '--a': {'type': int},
-                             },
-                }
-            },
-        }
-    }
-    parser = skel_to_argparse(skel)
-    actions = parser.metadata['actions']
-    print_skel(actions)
-    parser = parser.getvalue()
-    ns = parser.parse_args(argv)
-    print(ns)
-    print(skel['_']['d']['_']['cmd3']['->'])  # noqa
-
-
-if __name__ == '__main__':
-    # _main()
-    _main(['123', 'Z', 'd', 'pos', 'cmd3', '--a', '123'])
-
-
 """
     # stdout, stdout_err, close_stdout = bind_stream(stdout, silent, strict)
     # if stdout_err:
