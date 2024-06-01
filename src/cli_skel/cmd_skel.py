@@ -13,6 +13,7 @@ see example in the end of the module.
 __all__ = [
     'SkelCmdBase',
     'skel_to_cmd_cls',
+    'skel_to_cmd',
 ]
 
 
