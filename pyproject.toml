@@ -1,12 +1,19 @@
 [project]
+
 name = "cli-skel"
+# TODO: dynamic version
+
 requires-python = ">=3.12"
+
 authors = [{name = "Michael Frank", email = "frankm@post.bgu.ac.il"}]
 maintainers = [{name = "Michael Frank", email = "frankm@post.bgu.ac.il"}]
+
 description = "Generate CLI applications from dictionaries."
 readme = "README.md"
 license = {file = "LICENSE"}
+
 keywords = ["cli", "argparse", "cmd", "repl"]
+
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
