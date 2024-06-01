@@ -265,33 +265,3 @@ def format_skel_(dct: dict, space: str, space_incr: str) -> str:
             fmt.append(f'{space}{space_incr}{key!r}: {value!r},')
     fmt.append(f'{space}' + '}')
     return '\n'.join(fmt)
-
-
-"""
-    # stdout, stdout_err, close_stdout = bind_stream(stdout, silent, strict)
-    # if stdout_err:
-    #     return Err(error=stdout_err, default=default)
-    #
-    # stderr, stderr_err, close_stderr = bind_stream(stderr, silent, strict)
-    # if stderr_err:
-    #     return Err(error=stderr_err, default=default)
-    #
-    # with (enable_if([stdout], enable=close_stdout),
-    #       enable_if([stderr], enable=close_stderr),
-    #       enable_if([redirect_stdout(stdout), redirect_stderr(stderr)], enable=any([silent, stdout, stderr]))
-    #       ):
-    #     try:
-    #         skel = deepcopy(skel)
-    #         if parser is None:
-    #             parser_kwargs = {**skel.pop(skel_params.INIT, {}), **argparse_kwargs}
-    #             parser = argparse.ArgumentParser(**parser_kwargs)
-    #
-    #         skel_to_argparse_kwargs = dict(auto_dest=auto_dest, auto_required=auto_required, skel_params=skel_params)
-    #         skel_actions = skel_to_argparse_actions(skel, parser, **skel_to_argparse_kwargs)
-    #         return Ok(parser, metadata=dict(stdout=stdout, stderr=stderr, actions=skel_actions))
-    #
-    #     except BaseException as ex:
-    #         if not strict:
-    #             return Err(error=ex, stdout=stdout, stderr=stderr, default=default)
-    #         raise
-"""
