@@ -1,0 +1,8 @@
+pytest
+pytest-cov
+jupyter
+myst-nb
+sphinx-autoapi
+sphinx-rtd-theme
+sphinx-markdown-builder
+tomlkit
