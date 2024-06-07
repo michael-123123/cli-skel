@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 # -------------
 [project]
 name = "cli-skel"
-version = "0.1.0"
+version = "0.2.0"
 description = "Generate CLI applications from python dictionaries."
 
 authors = [{name="Michael Frank", email="frankm@post.bgu.ac.il"}]
