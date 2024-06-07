@@ -1,20 +1,31 @@
+# ------------------
+# Build system info:
+# ------------------
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "setuptools-scm>=8.0"
+]
+build-backend = "setuptools.build_meta"
+
+
+# -------------
+# Project info:
+# -------------
 [project]
-
 name = "cli-skel"
-# TODO: dynamic version
+version = "0.1.0"
+description = "Generate CLI applications from python dictionaries."
 
-requires-python = ">=3.12"
-
-authors = [{name = "Michael Frank", email = "frankm@post.bgu.ac.il"}]
-maintainers = [{name = "Michael Frank", email = "frankm@post.bgu.ac.il"}]
-
-description = "Generate CLI applications from dictionaries."
+authors = [{name="Michael Frank", email="frankm@post.bgu.ac.il"}]
+maintainers = [{name="Michael Frank", email="frankm@post.bgu.ac.il"}]
 readme = "README.md"
 license = {file = "LICENSE"}
 
+# Additional info - can be filled in manually later
 keywords = ["cli", "argparse", "cmd", "repl"]
-
 classifiers = [
+    "Programming Language :: Python",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: CLI Applications",
@@ -22,10 +33,46 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
+
+# -------------
+# Dependencies:
+# -------------
+requires-python = ">=3.12"
+dependencies = []
+
+
+# Optional dependencies (need these for testing + doc generation)
+[project.optional-dependencies]
+# key=[packages...]
+#     defines a special optional dependency which is installed
+#     pip install mypackage[key]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "jupyter",
+    "myst-nb",
+    "sphinx-autoapi",
+    "sphinx-rtd-theme",
+    "sphinx-markdown-builder",
+    "tomlkit"
+]
+
+
+# URLs
 [project.urls]
-# TODO:
-#Homepage = "https://example.com"
-#Documentation = "https://readthedocs.org"
-#Repository = "https://github.com/me/spam.git"
-#Issues = "https://github.com/me/spam/issues"
-#Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+Homepage = "https://github.com/michael-123123/cli-skel"
+#Documentation = "https://github.com/michael-123123/cli-skel/-/tree/docs"
+Repository = "https://github.com/michael-123123/cli-skel.git"
+Issues = "https://github.com/michael-123123/cli-skel/issues"
+
+
+[project.scripts]
+# key = "package.sub_package.module.myscript:entry_point"
+#     will deploy to `scripts/key' the script 'package.sub_package.module.myscript.py' and run it from entry_point()
+
+[project.gui-scripts]
+# same as project.scripts but for gui apps
+# (mostly used to prevent terminal pop-up in windows)
+
+# [tool.setuptools.dynamic]
+# dependencies = {file = ["requirements.txt"]}
