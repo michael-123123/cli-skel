@@ -36,6 +36,10 @@ class SkelCmdBase(cmd.Cmd):
     Generates a class which implements a REPL whose behavior is determined by the cli skeleton.
     """
 
+    # TODO: we have an issue here that if someone has `cmd` in skeleton
+    #       and adds a `do_cmd` method - the entire mechanism will be skipped
+    #       this is desired behavior on the one hand - and kind of weird on the other hand.
+
     EXIT_SUCCESS: ClassVar[int] = 0
     EXIT_FAILURE: ClassVar[int] = 1
 
