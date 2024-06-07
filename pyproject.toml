@@ -26,11 +26,17 @@ license = {file = "LICENSE"}
 keywords = ["cli", "argparse", "cmd", "repl"]
 classifiers = [
     "Programming Language :: Python",
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: CLI Applications",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
+
+    "Development Status :: 5 - Production/Stable",
+
+    "Intended Audience :: Developers",
+
+    "Topic :: Software Development :: Interpreters",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Terminals",
+    "Topic :: Utilities"
 ]
 
 
