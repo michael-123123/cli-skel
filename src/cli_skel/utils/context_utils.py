@@ -15,7 +15,7 @@ import os
 import pathlib
 import sys
 from contextlib import contextmanager, ExitStack, redirect_stdout, redirect_stderr
-from typing import ContextManager, Iterable, IO, Optional, Callable, Any
+from typing import ContextManager, Iterable, IO, Optional, Callable
 
 
 @contextmanager
