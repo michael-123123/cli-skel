@@ -201,6 +201,12 @@ sad to see you go
 
 ## Installation
 
+### Install Directly from PyPI
+```shell
+pip install cli-skel
+```
+
+### Install Latest from GitHub
 ```shell
 pip install 'git+https://github.com/michael-123123/cli-skel.git'
 ```
