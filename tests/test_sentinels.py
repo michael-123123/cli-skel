@@ -29,3 +29,8 @@ class TestSentinels(unittest.TestCase):
         self.assertTrue(missing1 != copy(missing2))
         self.assertTrue(missing1 is not deepcopy(missing2))
         self.assertTrue(missing1 != deepcopy(missing2))
+
+    def test_missing_str(self):
+        missing1 = MissingType('bye')
+        self.assertTrue(str(missing1).casefold().startswith('missing'))
+        self.assertTrue(repr(missing1).casefold().startswith('missing'))
