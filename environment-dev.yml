@@ -4,13 +4,13 @@ channels:
 dependencies:
   - conda-forge::python >= 3.12
   - conda-forge::pip
-  - setuptools >= 61.0
-  - setuptools-scm >= 8.0
-  - pytest
-  - pytest-cov
-  - jupyter
-  - myst-nb
-  - sphinx-autoapi
-  - sphinx-rtd-theme
-  - sphinx-markdown-builder
-  - tomlkit
+  - conda-forge::setuptools >= 61.0
+  - conda-forge::setuptools-scm >= 8.0
+  - conda-forge::pytest
+  - conda-forge::pytest-cov
+  - conda-forge::jupyter
+  - conda-forge::myst-nb
+  - conda-forge::sphinx-autoapi
+  - conda-forge::sphinx-rtd-theme
+  - conda-forge::sphinx-markdown-builder
+  - conda-forge::tomlkit
