@@ -7,3 +7,4 @@ build/
 *.egg-info/
 .coverage
 dist/
+.ipynb_checkpoints/
