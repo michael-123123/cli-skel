@@ -6,7 +6,7 @@ dependencies:
   - conda-forge::pip
   - conda-forge::setuptools >= 61.0
   - conda-forge::setuptools-scm >= 8.0
-  - conda-forge::pytest
+  - conda-forge::pytest-xdist
   - conda-forge::pytest-cov
   - conda-forge::jupyter
   - conda-forge::myst-nb
