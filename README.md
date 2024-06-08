@@ -211,6 +211,13 @@ pip install cli-skel
 pip install 'git+https://github.com/michael-123123/cli-skel.git'
 ```
 
+### Install From Source
+```shell
+git clone https://github.com/michael-123123/cli-skel.git
+cd cli-skel
+pip install .
+```
+
 
 ## License
 
