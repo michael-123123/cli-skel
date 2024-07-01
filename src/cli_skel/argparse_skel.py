@@ -40,8 +40,12 @@ class SkelSpecialKeys:
     """
     INIT: tuple = ()
     SUBPARSERS: str = '_'
+    GROUP: str = '@'
+    EXCLUSIVE: str = '^'
     TARGET: str = '->'
     TARGET_NAME: str = 'target_'
+    # TODO: add support that when a key begins with '!' then special effects like '_' are ignored.
+    # TODO: add support that when a key begins with '#' then entire sub dictionary is ignored
 
 
 def skel_to_argparse(skel: dict[str | tuple, str | dict],
@@ -142,6 +146,15 @@ def skel_to_argparse_actions(skel: dict[str | tuple, str | dict],
                              auto_required: bool = True,
                              skel_params: Any = SkelSpecialKeys,
                              ) -> dict[str | tuple, dict | argparse.Action]:
+    def _is_int_or_empty(x):
+        if not x:
+            return True
+        try:
+            _ = int(x)
+            return True
+        except BaseException:  # noqa
+            return False
+
     skel_actions = {skel_params.INIT: parser}
 
     target = skel.pop(skel_params.TARGET, _MISSING)
@@ -151,11 +164,37 @@ def skel_to_argparse_actions(skel: dict[str | tuple, str | dict],
     subskel = skel.pop(skel_params.SUBPARSERS, _MISSING)
 
     for argname, arg_params in skel.items():
-        argnames = (argname,) if isinstance(argname, str) else argname
-        arg_explicit_params = arg_params.pop(skel_params.INIT, {})
-        arg_params = {**arg_explicit_params, **arg_params}
-        action = parser.add_argument(*argnames, **arg_params)
-        skel_actions[argname] = action
+        if isinstance(argname, str) and argname[0] == skel_params.GROUP:
+            group_name = None if _is_int_or_empty(argname[1:]) else argname[1:]
+            group_init = arg_params.pop(skel_params.INIT, {})
+            group = parser.add_argument_group(**{**{'title': group_name}, **group_init})
+            skel_actions[argname] = skel_to_argparse_actions(
+                arg_params,
+                group,  # noqa
+                # auto_dest=auto_dest,  # this is probably the right thing to do
+                auto_required=auto_required,
+                skel_params=skel_params,
+            )
+        elif isinstance(argname, str) and argname[0] == skel_params.EXCLUSIVE:
+            group_name = None if _is_int_or_empty(argname[1:]) else argname[1:]
+            group_init = arg_params.pop(skel_params.INIT, {})
+            if group_name or (group_init and 'required' not in group_init) or len(group_init) > 1:
+                group = parser.add_argument_group(**{**{'title': group_name}, **group_init})
+            else:
+                group = parser.add_mutually_exclusive_group(**group_init)
+            skel_actions[argname] = skel_to_argparse_actions(
+                arg_params,
+                group,  # noqa
+                # auto_dest=auto_dest,  # this is probably the right thing to do
+                auto_required=auto_required,
+                skel_params=skel_params,
+            )
+        else:
+            argnames = (argname,) if isinstance(argname, str) else argname
+            arg_explicit_params = arg_params.pop(skel_params.INIT, {})
+            arg_params = {**arg_explicit_params, **arg_params}
+            action = parser.add_argument(*argnames, **arg_params)
+            skel_actions[argname] = action
 
     if subskel is not _MISSING:
         subparsers_kwargs = subskel.pop(skel_params.INIT, {})
@@ -177,7 +216,8 @@ def skel_to_argparse_actions(skel: dict[str | tuple, str | dict],
                 subcmd_params,
                 subparser,
                 auto_dest=None if auto_dest is None else subcmd,
-                auto_required=auto_required
+                auto_required=auto_required,
+                skel_params=skel_params,
             )
 
     return skel_actions
@@ -210,6 +250,10 @@ def iter_skel_positionals_defaults(skel: dict,
             arginfo.pop(skel_params.INIT, None)
             arginfo.pop(skel_params.TARGET, None)
             for _, subarginfo in arginfo.items():
+                yield from iter_skel_positionals_defaults(subarginfo)
+        elif arg[0] in [skel_params.GROUP, skel_params.EXCLUSIVE]:
+            arginfo.pop(skel_params.INIT, None)
+            for subarginfo in arginfo.values():
                 yield from iter_skel_positionals_defaults(subarginfo)
         else:
             if isinstance(arg, str):
