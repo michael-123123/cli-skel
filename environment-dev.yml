@@ -14,3 +14,6 @@ dependencies:
   - conda-forge::sphinx-rtd-theme
   - conda-forge::sphinx-markdown-builder
   - conda-forge::tomlkit
+  - pip:
+      - build
+      - twine
